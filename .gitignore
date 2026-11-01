@@ -1,0 +1,32 @@
+# Dependencies (rebuilt from package-lock.json by npm ci)
+node_modules/
+
+# Build and test output
+dist/
+coverage/
+playwright-report/
+test-results/
+blob-report/
+*.tsbuildinfo
+.vite/
+
+# Secrets and local settings. .env.example is the one safe template.
+.env
+.env.*
+!.env.example
+*.local
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Logs
+*.log
+
+# Editor and system files
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.claude/
+.DS_Store
+Thumbs.db

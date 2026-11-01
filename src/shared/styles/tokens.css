@@ -1,0 +1,88 @@
+/* Ported from the design canvas. Components use these through Tailwind, never as raw colours. */
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --sunken: #f0f2f5;
+  --line: #e4e7ec;
+  --line2: #cfd5de;
+  --ink: #0e1522;
+  --ink2: #434e5e;
+  --ink3: #5b6677;
+  --btn: #0e1522;
+  --btnink: #ffffff;
+  --acc: #4338ca;
+  --accbg: #eef0ff;
+  --accline: #c7ccfb;
+  --crit: #b42318;
+  --critbg: #feeceb;
+  --critdot: #e5484d;
+  --high: #b54708;
+  --highbg: #fff0e0;
+  --highdot: #f5820d;
+  --med: #8a5a00;
+  --medbg: #fef4cc;
+  --meddot: #e2a507;
+  --low: #475467;
+  --lowbg: #eef1f5;
+  --lowdot: #8a94a6;
+  --s-open: #175cd3;
+  --s-openbg: #eaf2ff;
+  --s-asg: #6941c6;
+  --s-asgbg: #f1ecfe;
+  --s-prog: #0b7480;
+  --s-progbg: #e1f6f7;
+  --s-res: #067647;
+  --s-resbg: #e4f6ea;
+  --s-clo: #475467;
+  --s-clobg: #eef1f5;
+  --s-reo: #be185d;
+  --s-reobg: #fde8f1;
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.06);
+  --pop: 0 16px 40px rgba(16, 24, 40, 0.16), 0 2px 6px rgba(16, 24, 40, 0.08);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0a0c10;
+  --surface: #12151b;
+  --sunken: #171b23;
+  --line: #222834;
+  --line2: #303847;
+  --ink: #eceff4;
+  --ink2: #b7bfcd;
+  --ink3: #97a1b3;
+  --btn: #eceff4;
+  --btnink: #0a0c10;
+  --acc: #a9b0ff;
+  --accbg: #1b1f42;
+  --accline: #363d7f;
+  --crit: #ff9e97;
+  --critbg: #3a1618;
+  --critdot: #ff5a52;
+  --high: #ffb26b;
+  --highbg: #3a2210;
+  --highdot: #ff8a2b;
+  --med: #f3ce5c;
+  --medbg: #352a08;
+  --meddot: #eab308;
+  --low: #b7bfcd;
+  --lowbg: #1c212b;
+  --lowdot: #7e889a;
+  --s-open: #86b5ff;
+  --s-openbg: #12294e;
+  --s-asg: #c8afff;
+  --s-asgbg: #2a1d4f;
+  --s-prog: #62d6e0;
+  --s-progbg: #0f3b41;
+  --s-res: #70dfa0;
+  --s-resbg: #0f3323;
+  --s-clo: #b7bfcd;
+  --s-clobg: #1c212b;
+  --s-reo: #ff92c0;
+  --s-reobg: #43152a;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  /* Not in the canvas (dark popups would have used the light shadow). */
+  --pop: 0 16px 40px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
+}

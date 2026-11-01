@@ -1,0 +1,80 @@
+@import '@fontsource-variable/inter/wght.css';
+@import '@fontsource-variable/jetbrains-mono/wght.css';
+@import 'tailwindcss';
+@import './tokens.css';
+
+/* Only our tokens exist in Tailwind, so a stray colour like bg-red-500 does not compile. */
+@theme inline {
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-line: var(--line);
+  --color-line2: var(--line2);
+  --color-ink: var(--ink);
+  --color-ink2: var(--ink2);
+  --color-ink3: var(--ink3);
+  --color-btn: var(--btn);
+  --color-btnink: var(--btnink);
+  --color-acc: var(--acc);
+  --color-accbg: var(--accbg);
+  --color-accline: var(--accline);
+  --color-crit: var(--crit);
+  --color-critbg: var(--critbg);
+  --color-critdot: var(--critdot);
+  --color-high: var(--high);
+  --color-highbg: var(--highbg);
+  --color-highdot: var(--highdot);
+  --color-med: var(--med);
+  --color-medbg: var(--medbg);
+  --color-meddot: var(--meddot);
+  --color-low: var(--low);
+  --color-lowbg: var(--lowbg);
+  --color-lowdot: var(--lowdot);
+  --color-s-open: var(--s-open);
+  --color-s-openbg: var(--s-openbg);
+  --color-s-asg: var(--s-asg);
+  --color-s-asgbg: var(--s-asgbg);
+  --color-s-prog: var(--s-prog);
+  --color-s-progbg: var(--s-progbg);
+  --color-s-res: var(--s-res);
+  --color-s-resbg: var(--s-resbg);
+  --color-s-clo: var(--s-clo);
+  --color-s-clobg: var(--s-clobg);
+  --color-s-reo: var(--s-reo);
+  --color-s-reobg: var(--s-reobg);
+  --shadow-card: var(--shadow);
+  --shadow-pop: var(--pop);
+  --font-sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+  }
+
+  body {
+    min-height: 100dvh;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--acc);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
