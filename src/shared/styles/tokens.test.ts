@@ -54,9 +54,6 @@ const GRAPHIC_PAIRS: [string, string][] = [
   ['--lowdot', '--surface'],
 ];
 
-// Waiting for the owner's decision on the design colours. See docs/phase-1-report.md.
-const KNOWN_FAILURES = new Set(['light:--highdot', 'light:--meddot']);
-
 const lightTheme = readTheme(":root[data-theme='light']");
 const darkTheme = readTheme(":root[data-theme='dark']");
 
@@ -75,12 +72,6 @@ describe.each([
   });
 
   it.each(GRAPHIC_PAIRS)('graphic %s on %s is at least 3:1', (graphic, background) => {
-    const pair = `${theme === lightTheme ? 'light' : 'dark'}:${graphic}`;
-    const check = () => {
-      expect(contrast(color(graphic), color(background))).toBeGreaterThanOrEqual(3);
-    };
-    // Known failures must keep failing: fixing a colour turns this red until the entry is removed.
-    if (KNOWN_FAILURES.has(pair)) expect(check).toThrow();
-    else check();
+    expect(contrast(color(graphic), color(background))).toBeGreaterThanOrEqual(3);
   });
 });

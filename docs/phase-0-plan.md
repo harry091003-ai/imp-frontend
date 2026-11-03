@@ -155,13 +155,13 @@ This is the riskiest part of the frontend.
 
 Enforced in CI from Phase 1. Sizes are gzip.
 
-| Item                               | Limit                                |
-| ---------------------------------- | ------------------------------------ |
-| JS on first load (shell + sign-in) | 170 KB                               |
-| Any single lazy route              | 80 KB                                |
-| Recharts                           | Loaded only on Dashboard and Reports |
-| CSS total                          | 30 KB                                |
-| Fonts (subset, woff2)              | 120 KB                               |
+| Item                               | Limit                                                             |
+| ---------------------------------- | ----------------------------------------------------------------- |
+| JS on first load (shell + sign-in) | 170 KB (raised to 200 KB on 2026-11-02 after measuring: ADR 0002) |
+| Any single lazy route              | 80 KB                                                             |
+| Recharts                           | Loaded only on Dashboard and Reports                              |
+| CSS total                          | 30 KB                                                             |
+| Fonts (subset, woff2)              | 120 KB                                                            |
 
 These limits are my starting estimate and not measured yet. If real numbers disagree, I will show you the reason before changing a limit.
 

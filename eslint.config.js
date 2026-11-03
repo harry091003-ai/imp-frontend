@@ -21,13 +21,15 @@ const NOT_HTTP_LIBRARY = {
   message: 'Only src/shared/lib/http may use axios. Call an API service instead.',
 };
 const NOT_HTTP_CLIENT = {
-  group: ['@/shared/lib/http', '@/shared/lib/http/*', '**/api/*', '**/api'],
+  // Exact paths on purpose: the error helpers in shared/lib/http/errors are fine for components.
+  regex: '^(@/shared/lib/http(/client|/index)?|(\\.\\./)+api|.*/features/[^/]+/api)$',
   message: 'Components never call APIs: component -> hook -> API service -> http client.',
 };
 
 export default tseslint.config(
   { ignores: ['dist', 'coverage', 'public', 'playwright-report', 'test-results'] },
   js.configs.recommended,
+  { files: ['scripts/**'], languageOptions: { globals: globals.node } },
   {
     files: ['**/*.{ts,tsx}'],
     extends: [...tseslint.configs.strictTypeChecked],

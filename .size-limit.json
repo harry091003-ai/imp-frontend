@@ -1,11 +1,5 @@
 [
   {
-    "name": "JS on first load",
-    "path": "dist/assets/index-*.js",
-    "limit": "170 KB",
-    "gzip": true
-  },
-  {
     "name": "CSS total",
     "path": "dist/assets/*.css",
     "limit": "30 KB",

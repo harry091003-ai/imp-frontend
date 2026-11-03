@@ -40,6 +40,8 @@ type TrackedConfig = InternalAxiosRequestConfig & {
 export interface HttpClientOptions {
   /** The session cannot continue. The app clears its data and shows the sign-in page. */
   onSessionEnded: (code: string) => void;
+  /** Called with each new token, so the app can read who the user is from it. */
+  onAccessToken?: (token: string) => void;
   retryDelayMs?: number;
 }
 
@@ -47,6 +49,8 @@ export interface HttpClient {
   api: AxiosInstance;
   getAccessToken: () => string | null;
   setAccessToken: (token: string | null) => void;
+  /** Asks for a new token with the refresh cookie, such as after a page reload. */
+  refreshSession: () => Promise<void>;
 }
 
 function newTraceId(): string {
@@ -68,6 +72,7 @@ function isRetriableGet(error: ApiError, config: TrackedConfig): boolean {
 
 export function createHttpClient({
   onSessionEnded,
+  onAccessToken,
   retryDelayMs = 300,
 }: HttpClientOptions): HttpClient {
   // In memory only: gone on reload, and out of reach of anything reading browser storage.
@@ -100,6 +105,7 @@ export function createHttpClient({
         });
       }
       accessToken = token.data;
+      onAccessToken?.(token.data);
     } catch (error) {
       const apiError = toApiError(error);
       // A server outage is not the user's fault, so it does not sign them out.
@@ -155,6 +161,8 @@ export function createHttpClient({
     getAccessToken: () => accessToken,
     setAccessToken: (token) => {
       accessToken = token;
+      if (token) onAccessToken?.(token);
     },
+    refreshSession: refreshOnce,
   };
 }

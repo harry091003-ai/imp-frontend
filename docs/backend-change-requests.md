@@ -2,7 +2,7 @@
 
 Things the frontend needs that the backend does not provide today. Checked against the code on 2026-11-01.
 
-**Nothing here has been changed.** Each item needs your approval first. Then: one small change, test first, following `IMP/CLAUDE.md`. Until a change lands, the frontend uses an MSW mock of the proposed contract, and the mock is marked as "proposed", not "real".
+**Built so far (2026-11-02):** BCR-02 and the log-leak part of BCR-04 (committed `c6b022e` on the `IMP` branch `auth-refresh-cookie`), BCR-01 (committed `eaeaa89` on branch `gateway-real-client-ip`), and the rest of BCR-04, BCR-03 and BCR-05 (branch `gateway-prod-settings`, not committed). Everything else is unchanged. Each item needs your approval first. Then: one small change, test first, following `IMP/CLAUDE.md`. Until a change lands, the frontend uses an MSW mock of the proposed contract, and the mock is marked as "proposed", not "real".
 
 | Priority | Meaning                                                        |
 | -------- | -------------------------------------------------------------- |
@@ -35,6 +35,8 @@ Things the frontend needs that the backend does not provide today. Checked again
 
 ### BCR-01: Real client IP behind nginx
 
+**Status (2026-11-02): built** on the `IMP` branch `gateway-real-client-ip`, not committed or merged. Gateway 89 tests pass. The new test failed on the old code (Bob blocked on his first try) and passes now. Not tried by hand. **Frontend work for Phase 5:** the nginx config must contain `proxy_set_header X-Real-IP $remote_addr;`, and the gateway gets `trustedproxies` set to nginx's address. Details: `IMP/PROGRESS.md`, "BCR-01".
+
 **Problem.** `RateLimitFilter` deliberately uses the real connection address for login, signup and refresh, and ignores `X-Forwarded-For`. With nginx in front, every visitor's connection comes from nginx, so **all users on Earth share one bucket**:
 
 - 10 logins a minute for the whole site. One person or bot can stop everyone signing in.
@@ -46,6 +48,8 @@ Things the frontend needs that the backend does not provide today. Checked again
 **Test first.** A fake forwarded header from an untrusted address is ignored. Two clients behind the trusted proxy get separate buckets.
 
 ### BCR-02: Refresh token in an HttpOnly cookie
+
+**Status (2026-11-02): approved and built** on the `IMP` branch `auth-refresh-cookie`, not committed or merged. AuthService 94 and gateway 77 tests pass. Not tried by hand yet. The cookie path is the refresh path only (`/api/auth/refresh`); logout clears it without reading it. Details: `docs/bcr-02-plan.md` and `IMP/PROGRESS.md`.
 
 **Problem.** Login and refresh return the 7-day refresh token in JSON, so frontend JavaScript must hold it. Any script injection could steal 7 days of access. `sessionStorage` has a second trap: duplicating a browser tab copies it, both tabs then use the same one-time token, and the reuse check cancels the login.
 
@@ -79,11 +83,21 @@ An invalid change returns `409 INVALID_STATUS_TRANSITION`.
 
 **Your decision.** Should an engineer be able to close or reopen, or only a supervisor and admin?
 
+**Decided 2026-11-02 by the owner:** an engineer can also close and reopen an incident. Order of work agreed: BCR-04 (rest), then BCR-03, then BCR-05.
+
+**Built 2026-11-02, test first, on the `IMP` branch `gateway-prod-settings` (not committed).** The table above, with one change: REOPENED may also go straight to RESOLVED, like OPEN (an existing backend test covers that real case). Wrong steps get `409 INVALID_STATUS_TRANSITION`. Engineers already pass the "who" check for their own incidents, so they can close and reopen. `statusFlow.ts` and the mock follow the same table. IncidentService 42 tests pass.
+
 ### BCR-04: Production settings
 
-**Problem.** The gateway sets `logging.level.org.springframework.cloud.gateway=DEBUG`, and no Spring profiles exist. DEBUG logs can be large and may include request details. `/actuator` on the gateway has no login check.
+**Problem.** The gateway sets `logging.level.org.springframework.cloud.gateway=DEBUG`, and no Spring profiles exist. `/actuator` on the gateway has no login check.
+
+**Proved 2026-11-02 while testing BCR-02:** at DEBUG, the gateway's `ObservedRequestHttpHeadersFilter` writes every request header to the log. That includes the refresh cookie, the `Authorization` header with the access token, and `X-Internal-Secret`. Anyone who can read the gateway log could reuse those values. This is older than BCR-02.
+
+**First piece fixed 2026-11-02, test first, on the same `IMP` branch (`auth-refresh-cookie`, uncommitted).** That one logger is now set to INFO, and `GatewayLogSecretsTest` sends a cookie, a token and the internal secret and fails if any of them reaches the log. It failed before the fix and passes after it (gateway 78 tests pass). The gateway is the only place in the project with a DEBUG level. **Still open:** a `prod` profile with INFO for everything, and a login check on `/actuator`. A gateway log file written before the fix may still hold tokens and the internal secret: delete it, and change `internalsecret` if it was ever shared.
 
 **Proposal.** A `prod` profile with INFO logs. nginx also refuses `/api/actuator`; that part is frontend work and needs no backend change.
+
+**Rest done 2026-11-02, test first, on the `IMP` branch `gateway-prod-settings` (not committed).** New `application-prod.properties`, used only with `SPRING_PROFILES_ACTIVE=prod`: gateway logs at INFO, and `/actuator` on its own port 8092, open to the server itself only, so nginx can never reach it. The laptop (no profile) is unchanged. Gateway 93 tests pass. **BCR-04 is now complete.** The nginx rule refusing `/api/actuator` is still worth adding in Phase 5 as a second lock.
 
 ---
 
@@ -96,6 +110,8 @@ An invalid change returns `409 INVALID_STATUS_TRANSITION`.
 **Proposal.** `POST /users/lookup` with `{ids: [...]}`, at most 100 ids. Returns `{userid, username}` only, with no email. An unknown id is left out of the answer. The frontend caches results, so one screen makes one call.
 
 **Your decision.** Is every logged-in user allowed to see any username? I think that is fine inside one company, but it is your rule to set.
+
+**Decided and built 2026-11-02** (owner: show names instead of ids on the screens), test first, on the `IMP` branch `gateway-prod-settings` (not committed). As proposed: at most 100 ids, only `{userid, username}`, unknown ids left out, any logged-in user. The frontend sends longer lists in calls of 100, and `capabilities.ts` has `userNames: true`. UserService 21 tests pass.
 
 ### BCR-06: Search and filters on `GET /incidents`
 

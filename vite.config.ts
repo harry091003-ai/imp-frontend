@@ -1,11 +1,13 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
+import { msw } from 'msw/vite';
 import { defineConfig } from 'vitest/config';
 
 const GATEWAY_URL = 'http://127.0.0.1:8082';
 
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
+export default defineConfig(({ command }) => ({
+  // The mock tool's worker file is only served in development, and never goes in a build.
+  plugins: [react(), tailwindcss(), ...(command === 'serve' ? [msw({ mode: 'worker-only' })] : [])],
   resolve: {
     tsconfigPaths: true,
   },
@@ -37,4 +39,4 @@ export default defineConfig({
       exclude: ['src/test/**', 'src/**/*.test.{ts,tsx}', 'src/main.tsx'],
     },
   },
-});
+}));

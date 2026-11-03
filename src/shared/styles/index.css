@@ -45,10 +45,36 @@
   --color-s-clobg: var(--s-clobg);
   --color-s-reo: var(--s-reo);
   --color-s-reobg: var(--s-reobg);
+  --radius-btn: 9px;
+  --radius-input: 10px;
+  --radius-card: 14px;
+  --text-label: 13px;
+  --animate-fade-in: fade-in 0.15s ease-out;
+  --animate-pop-in: pop-in 0.15s ease-out;
+  --animate-slide-in: slide-in 0.2s ease-out;
   --shadow-card: var(--shadow);
   --shadow-pop: var(--pop);
   --font-sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
 }
 
 @layer base {
@@ -60,6 +86,14 @@
 
   body {
     min-height: 100dvh;
+    font-size: 14px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
   }
 
   :focus-visible {

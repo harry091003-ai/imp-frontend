@@ -22,6 +22,10 @@ Open http://localhost:5173. API calls to `/api` go to the gateway on `127.0.0.1:
 
 `npm ci` is safe to repeat. Install scripts are switched off in `.npmrc`, which is why the Git hook has its own setup command.
 
+## Sample data or real backend
+
+By default `npm run dev` uses sample data, so no backend is needed. Press Engineer, Supervisor or Admin on the sign-in page. To use your real backend, create `.env.local` with `VITE_API_MOCKING=false` and restart. Production builds always use the real backend. See `docs/api-map.md`.
+
 ## Commands
 
 | Command             | What it does                            |
