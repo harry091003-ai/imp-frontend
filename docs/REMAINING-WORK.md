@@ -1,23 +1,23 @@
 # Remaining work
 
-The one list of what is left. Updated as work finishes. Last updated: 2026-11-02.
+The one list of what is left. Updated as work finishes. Last updated: 2026-11-03.
 
 ## Before deploying (checked 2026-11-03)
 
 The app runs end to end on the laptop (owner, 2026-11-03). What is left, in order:
 
-| #   | Step                                    | Who            | Why                                                                                                                              |
-| --- | --------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | Commit BCR-03, 04, 05 (17 files)        | You            | Not saved in Git yet                                                                                                             |
-| 2   | Commit the frontend (43 files)          | You, I prepare | Only Phase 1 is in Git                                                                                                           |
-| 3   | Merge `gateway-prod-settings` to master | You            | It holds all backend work (BCR-01 to 05)                                                                                         |
-| 4   | Put both projects on GitHub (private)   | You, I guide   | **No copy exists outside this laptop.** Also needed for CI                                                                       |
-| 5   | Choose where to host                    | You decide     | 8 services + Kafka + MySQL + PostgreSQL need about 8 to 16 GB of RAM                                                             |
-| 6   | Docker and nginx files (Phase 5)        | Me             | Packages every service, HTTPS, security headers, `X-Real-IP` (BCR-01), refuses `/api/actuator`, `prod` profile (BCR-04)          |
-| 7   | Production secrets                      | You, I guide   | New JWT key pair, new `internalsecret`, strong database passwords, Gemini key: in server settings, never in files                |
-| 8   | Database start-up                       | Me             | Roles rows are seeded by hand today; first admin through `adminemail`; daily database backups                                    |
-| 9   | Final checks                            | Both           | Browser check of the production build, page tests, other browsers, the hand tests in `IMP/PROGRESS.md`                           |
-| 10  | Decide which hidden features go first   | You decide     | BCR-06 to 10 are hidden today. BCR-09 also stops supervisors receiving every engineer's data, so it is worth doing before launch |
+| #   | Step                                    | Who          | Why                                                                                                                              |
+| --- | --------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | ~~Commit BCR-03, 04, 05~~               | Done         | Done 2026-11-03 (`1228658`)                                                                                                      |
+| 2   | ~~Commit the frontend~~                 | Done         | Done 2026-11-03 (`0fb4ca5`)                                                                                                      |
+| 3   | Merge `gateway-prod-settings` to master | You          | Holds all backend work (BCR-01 to 05). A simple fast-forward, 6 commits                                                          |
+| 4   | Put both projects on GitHub (private)   | You, I guide | **No copy exists outside this laptop.** Secrets check passed 2026-11-04: `docs/secrets-and-github.md`                            |
+| 5   | Choose where to host                    | You decide   | 8 services + Kafka + MySQL + PostgreSQL need about 8 to 16 GB of RAM                                                             |
+| 6   | Docker and nginx files (Phase 5)        | Me           | Packages every service, HTTPS, security headers, `X-Real-IP` (BCR-01), refuses `/api/actuator`, `prod` profile (BCR-04)          |
+| 7   | Production secrets                      | You, I guide | New JWT key pair, new `internalsecret`, strong database passwords, Gemini key: in server settings, never in files                |
+| 8   | Database start-up                       | Me           | Roles rows are seeded by hand today; first admin through `adminemail`; daily database backups                                    |
+| 9   | Final checks                            | Both         | Browser check of the production build, page tests, other browsers, the hand tests in `IMP/PROGRESS.md`                           |
+| 10  | Decide which hidden features go first   | You decide   | BCR-06 to 10 are hidden today. BCR-09 also stops supervisors receiving every engineer's data, so it is worth doing before launch |
 
 ## Waiting on you
 
