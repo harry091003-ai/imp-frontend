@@ -20,13 +20,12 @@ Both projects are safe to upload. Nothing secret is in the files or in any old c
 | Test passwords and secrets in test files                                                                                | Made-up values, safe                            | Made-up values, safe                 |
 | Emails in files                                                                                                         | Only `@example.com` test addresses              | Only `@example.com` / `@imp.example` |
 
-Two small notes, not problems:
+Cleaned before going public (2026-11-07):
 
-- Your own Gmail address was in `PROGRESS.md` in two early commits (`4031925`, removed in `6c51eb3`). An email address is
-  not a password. In a private repo only you see it.
-- Commits carry an email too: the frontend's say `Harmandip Singh`, the backend's say `learning@local`. Same: fine
-  for a private repo. If the repo ever becomes public, switch to GitHub's private "noreply" address first
-  (GitHub, Settings, Emails).
+- The history of both repos was rewritten once: the personal Gmail address and a home network address were removed
+  from every old commit, and every commit's author is now GitHub's private "noreply" address. Commit ids changed, so
+  short ids quoted in older notes no longer match.
+- New commits use the same noreply address (set in each repo's own Git settings).
 
 ## What goes up and what stays on the laptop
 
